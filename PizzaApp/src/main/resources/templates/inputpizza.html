@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add Pizza</title>
+<script>
+
+    function validateForm() {
+    	var size = document.getElementsByName('size');
+    	var stuffedCrustYes = document.getElementById('stuffedCrustYes');
+        var stuffedCrustNo = document.getElementById('stuffedCrustNo');
+		
+        var sizeSelected = false;
+        var stuffedCrustSelected = false;
+
+        var sizeSelected = false;
+        var stuffedCrustSelected = false;
+
+        // Check if a size option is selected
+        for (var i = 0; i < size.length; i++) {
+            if (size[i].checked) {
+                sizeSelected = true;
+                break;
+            }
+        }
+
+        // Check if a stuffed crust option is selected
+        if (stuffedCrustYes.checked || stuffedCrustNo.checked) {
+            stuffedCrustSelected = true;
+        }
+
+        if (!sizeSelected) {
+            alert("Please select a size.");
+            return false;
+        }
+
+        if (!stuffedCrustSelected) {
+            alert("Please select a crust option.");
+            return false;
+        }
+    }
+
+</script>
+</head>
+<body>
+<form th:object="${newPizza}" th:action="@{/update/{id}(id=${newPizza.id})}" method=POST onsubmit="return validateForm()">
+	Size:
+	<input type="radio" name="size" th:field="*{size}" value="S"> Small
+    <input type="radio" name="size" th:field="*{size}" value="M"> Medium
+    <input type="radio" name="size" th:field="*{size}" value="L"> Large
+	<br>
+	<br>
+    Stuffed Crust:
+    <input type="checkbox" id="stuffedCrustYes" name="stuffedCrust" value="true" th:field="*{stuffedCrust}"> Yes
+    <input type="checkbox" id="stuffedCrustNo" name="stuffedCrust" value="false" th:field="*{stuffedCrust}"> No
+    <br>
+    Pepperoni:
+    <input type="checkbox" name="toppings.pepperoni" th:field="*{toppings.pepperoni}">
+    <br>
+    Sausage:
+    <input type="checkbox" name="toppings.sausage" th:field="*{toppings.sausage}">
+    <br>
+    Mushrooms:
+    <input type="checkbox" name="toppings.mushrooms" th:field="*{toppings.mushrooms}">
+    <br>
+    Olives:
+    <input type="checkbox" name="toppings.olives" th:field="*{toppings.olives}">
+    <br>
+    Green Peppers:
+    <input type="checkbox" name="toppings.greenPeppers" th:field="*{toppings.greenPeppers}">
+    <br>
+    Pineapple:
+    <input type="checkbox" name="toppings.pineapple" th:field="*{toppings.pineapple}">
+    <br>
+    
+	<input name="submit" type="submit" value="submit" />
+	<br>
+	<a th:href="@{/viewAll}">View all Pizzas</a>
+</form>
+</body>
+</html>
